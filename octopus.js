@@ -1,7 +1,9 @@
 /**
  * OCTOPUS
  *
- * Simple asynchronous helper functions.
+ * Simple asynchronous helper
+ *
+ * This is basically a very tiny implementation of async.parallel
  *
  * 　  ／＼
  *　 ∠＿＿_ゝ　　
