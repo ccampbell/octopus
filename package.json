@@ -1,0 +1,27 @@
+{
+  "name": "octopus",
+  "version": "0.1.0",
+  "description": "Simple asynchronous helpers",
+  "main": "octopus.js",
+  "scripts": {
+    "test": "gulp mocha"
+  },
+  "keywords": [
+    "async",
+    "asynchronous",
+    "parallel"
+  ],
+  "author": "Craig Campbell",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-mocha": "^2.0.0",
+    "chai": "^2.1.2",
+    "sinon": "^1.14.1",
+    "gulp-coverage": "^0.3.34",
+    "gulp-uglify": "^1.1.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-size": "^1.2.1",
+    "gulp-inject-string": "0.0.2"
+  }
+}
