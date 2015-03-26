@@ -102,6 +102,27 @@ describe('Test octoppus.run', function() {
             done();
         });
     });
+
+    it('should work with empty array', function(done) {
+        var calls = [];
+
+        var called = false;
+        octopus.run(calls, function(results) {
+            called = true;
+            expect(results).to.deep.equal([]);
+            done();
+        });
+
+        setTimeout(function() {
+            if (!called) {
+                done();
+            }
+        }, 1000);
+
+        clock.tick(1000);
+
+        expect(called).to.be.true;
+    });
 });
 
 describe('Test octopus.step', function() {
@@ -158,5 +179,26 @@ describe('Test octopus.step', function() {
             expect(err).to.equal('Error now');
             done();
         });
+    });
+
+    it('should work with empty array', function(done) {
+        var calls = [];
+
+        var called = false;
+        octopus.step(calls, function(results) {
+            called = true;
+            expect(results).to.equal(undefined);
+            done();
+        });
+
+        setTimeout(function() {
+            if (!called) {
+                done();
+            }
+        }, 1000);
+
+        clock.tick(1000);
+
+        expect(called).to.be.true;
     });
 });

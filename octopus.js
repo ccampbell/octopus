@@ -19,6 +19,11 @@
         var waitingOn = isArray ? calls.length : Object.keys(calls).length;
         var responses = {};
 
+        if (waitingOn === 0) {
+            callback(isArray ? [] : {});
+            return;
+        }
+
         function _format(responses) {
             if (!isArray) {
                 return responses;
@@ -91,6 +96,11 @@
             });
 
             calls[index].apply(calls[index], args);
+        }
+
+        if (calls.length === 0) {
+            callback.call(octopus);
+            return;
         }
 
         _stepSingle(calls, 0, []);
