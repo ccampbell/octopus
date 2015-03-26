@@ -4,7 +4,8 @@ var inject = require('gulp-inject-string');
 var mocha = require('gulp-mocha');
 var rename = require('gulp-rename');
 var size = require('gulp-size');
-var uglify = require('gulp-uglify');
+// var uglify = require('gulp-uglify');
+var closure = require('gulp-closure-compiler-service');
 var pkg = require('./package.json');
 
 var VERSION = pkg.version;
@@ -23,7 +24,7 @@ gulp.task('mocha', function() {
 
 gulp.task('compress', function() {
     gulp.src('octopus.js')
-        .pipe(uglify())
+        .pipe(closure())
         .pipe(rename('octopus.min.js'))
         .pipe(inject.prepend('/* octopus.js v' + VERSION + '*/'))
         .pipe(inject.append('\n'))
