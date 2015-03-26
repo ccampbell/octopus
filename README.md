@@ -10,6 +10,12 @@
 Octopus is a couple of simple asynchronous helper functions.  It is designed
 for use in the browser and is < 500 bytes gzipped.  It works in node.js as well.
 
+It is available in NPM
+
+```
+npm install octopus-async
+```
+
 There are two calls
 
 ## octopus.run
