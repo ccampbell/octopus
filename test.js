@@ -130,6 +130,21 @@ describe('Test octoppus.run', function() {
 
         expect(called).to.be.true;
     });
+
+    it('should work with no callback', function(done) {
+        var oneRan = false;
+        var twoRan = false;
+
+        var calls = [
+            function(callback) { oneRan = true; callback(10); },
+            function(callback) { twoRan = true; callback(20); }
+        ];
+
+        octopus.run(calls);
+        expect(oneRan).to.be.true;
+        expect(twoRan).to.be.true;
+        done();
+    });
 });
 
 describe('Test octopus.step', function() {
@@ -210,5 +225,20 @@ describe('Test octopus.step', function() {
         clock.tick(1000);
 
         expect(called).to.be.true;
+    });
+
+    it('should work with no callback', function(done) {
+        var oneCalled = false;
+        var twoCalled = false;
+
+        var calls = [
+            function one(callback) { oneCalled = true; callback(10); },
+            function two(value, callback) { twoCalled = true; callback(value * 2); }
+        ];
+
+        octopus.step(calls);
+        expect(oneCalled).to.be.true;
+        expect(twoCalled).to.be.true;
+        done();
     });
 });

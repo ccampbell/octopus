@@ -18,6 +18,7 @@
         var isArray = calls instanceof Array;
         var waitingOn = isArray ? calls.length : Object.keys(calls).length;
         var responses = {};
+        callback = callback || function() {};
 
         if (waitingOn === 0) {
             callback.call(octopus, isArray ? [] : {});
@@ -72,6 +73,8 @@
     }
 
     function _step(calls, callback) {
+        callback = callback || function() {};
+
         function _stepSingle(calls, index, args) {
             args.push(function() {
 
