@@ -20,6 +20,7 @@ describe('Test octoppus.run', function() {
         ];
 
         octopus.run(calls, function(results) {
+            expect(this).to.equal(octopus);
             expect(arguments.length).to.equal(1);
             expect(results).to.deep.equal([10, 20]);
             done();
@@ -33,6 +34,7 @@ describe('Test octoppus.run', function() {
         };
 
         octopus.run(calls, function(results) {
+            expect(this).to.equal(octopus);
             expect(arguments.length).to.equal(1);
             expect(results).to.deep.equal({ten: 10, twenty: 20});
             done();
@@ -53,6 +55,7 @@ describe('Test octoppus.run', function() {
         ];
 
         octopus.run(calls, function(results) {
+            expect(this).to.equal(octopus);
             expect(arguments.length).to.equal(1);
             expect(results).to.deep.equal([10, 20, 30]);
             done();
@@ -68,6 +71,7 @@ describe('Test octoppus.run', function() {
         };
 
         octopus.run(calls, function(err, results) {
+            expect(this).to.equal(octopus);
             expect(arguments.length).to.equal(2);
             expect(err).to.equal(null);
             expect(results).to.deep.equal({ten: 10, twenty: 20});
@@ -82,6 +86,7 @@ describe('Test octoppus.run', function() {
         ];
 
         octopus.run(calls, function(err, results) {
+            expect(this).to.equal(octopus);
             expect(arguments.length).to.equal(2);
             expect(err).to.not.equal(null);
             expect(results).to.deep.equal([]);
@@ -96,6 +101,7 @@ describe('Test octoppus.run', function() {
         };
 
         octopus.run(calls, function(err, results) {
+            expect(this).to.equal(octopus);
             expect(arguments.length).to.equal(2);
             expect(err).to.not.equal(null);
             expect(results).to.deep.equal({});
@@ -109,6 +115,7 @@ describe('Test octoppus.run', function() {
         var called = false;
         octopus.run(calls, function(results) {
             called = true;
+            expect(this).to.equal(octopus);
             expect(results).to.deep.equal([]);
             done();
         });
@@ -148,6 +155,7 @@ describe('Test octopus.step', function() {
         ];
 
         octopus.step(calls, function(value) {
+            expect(this).to.equal(octopus);
             expect(value).to.equal(60);
             done();
         });
@@ -175,6 +183,7 @@ describe('Test octopus.step', function() {
         ];
 
         octopus.step(calls, function(err, value) {
+            expect(this).to.equal(octopus);
             expect(fourCalled).to.be.false;
             expect(err).to.equal('Error now');
             done();
@@ -187,6 +196,7 @@ describe('Test octopus.step', function() {
         var called = false;
         octopus.step(calls, function(results) {
             called = true;
+            expect(this).to.equal(octopus);
             expect(results).to.equal(undefined);
             done();
         });

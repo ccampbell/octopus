@@ -20,7 +20,7 @@
         var responses = {};
 
         if (waitingOn === 0) {
-            callback(isArray ? [] : {});
+            callback.call(octopus, isArray ? [] : {});
             return;
         }
 
@@ -41,7 +41,7 @@
                 return function() {
                     if (arguments.length === 2 && arguments[0]) {
                         waitingOn = 0;
-                        callback(arguments[0], isArray ? [] : {});
+                        callback.call(octopus, arguments[0], isArray ? [] : {});
                         return;
                     }
 
