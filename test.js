@@ -12,7 +12,7 @@ afterEach(function () {
     clock.restore();
 });
 
-describe('Test', function() {
+describe('Test octoppus.run', function() {
     it('should run functions in parallel', function(done) {
         var calls = [
             function ten(callback) { callback(10); },
@@ -99,6 +99,63 @@ describe('Test', function() {
             expect(arguments.length).to.equal(2);
             expect(err).to.not.equal(null);
             expect(results).to.deep.equal({});
+            done();
+        });
+    });
+});
+
+describe('Test octopus.step', function() {
+    it('should step through functions', function(done) {
+        var calls = [
+            function getValue(callback) {
+                setTimeout(function() {
+                    callback(10);
+                }, 100);
+            },
+            function multiply(value, callback) {
+                expect(value).to.equal(10);
+                setTimeout(function() {
+                    callback(value * 2);
+                }, 20);
+            },
+            function writeToDisk(value, callback) {
+                expect(value).to.equal(20);
+                setTimeout(function() {
+                    callback(value * 3);
+                }, 1000);
+            }
+        ];
+
+        octopus.step(calls, function(value) {
+            expect(value).to.equal(60);
+            done();
+        });
+
+        clock.tick(1200);
+    });
+
+    it('should step through node style functions', function(done) {
+        var fourCalled = false;
+        var calls = [
+            function one(callback) {
+                callback(null, 10);
+            },
+            function two(err, value, callback) {
+                expect(err).to.be.null;
+                callback('Error now', value);
+            },
+            function three(err, value, callback) {
+                callback(null, value);
+            },
+            function four(err, value, callback) {
+                fourCalled = true;
+                callback(err, value);
+            }
+        ];
+
+        octopus.step(calls, function(err, value) {
+            expect(fourCalled).to.be.false;
+            expect(err).to.equal('Error now');
             done();
         });
     });

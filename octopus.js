@@ -1,16 +1,17 @@
 /**
  * OCTOPUS
  *
- * Simple asynchronous helper
+ * Simple asynchronous helpers
  *
- * This is basically a very tiny implementation of async.parallel
+ * This is basically a very tiny implementation of async.parallel and
+ * async.series.
  *
  * 　  ／＼
  *　 ∠＿＿_ゝ　　
  *　 )|’ー’| /　
  *  (ノﾉﾉ从し'　　
  *
- *  @author Craig Campbell
+ * @author Craig Campbell
  */
 (function(global) {
     function _run(calls, callback) {
@@ -65,8 +66,39 @@
         });
     }
 
+    function _step(calls, callback) {
+        function _stepSingle(calls, index, args) {
+            args.push(function() {
+
+                // We assume here that if you pass in multiple arguments into
+                // your callback function the first one is an error argument
+                // following the node.js conventions.
+                //
+                // In that case we want to stop running tasks and fire the final
+                // callback with the error.
+                if (arguments.length > 1 && arguments[0]) {
+                    callback.apply(octopus, arguments);
+                    return;
+                }
+
+                if (index < calls.length - 1) {
+                    _stepSingle(calls, index + 1, Array.prototype.slice.call(arguments));
+                    return;
+                }
+
+                // Final callback
+                callback.apply(octopus, Array.prototype.slice.call(arguments));
+            });
+
+            calls[index].apply(calls[index], args);
+        }
+
+        _stepSingle(calls, 0, []);
+    }
+
     var octopus = {
-        run: _run
+        run: _run,
+        step: _step
     };
 
     global.octopus = octopus;
