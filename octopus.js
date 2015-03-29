@@ -40,7 +40,7 @@
         function _call(key) {
             calls[key].call(calls[key], (function(key) {
                 return function() {
-                    if (arguments.length === 2 && arguments[0]) {
+                    if (arguments.length === 2 && arguments[0] && waitingOn > 0) {
                         waitingOn = 0;
                         callback.call(octopus, arguments[0], isArray ? [] : {});
                         return;

@@ -109,6 +109,22 @@ describe('Test octoppus.run', function() {
         });
     });
 
+    it('should have only one callback for multiple errors', function(done) {
+        var calls = {
+            one: function(callback) { callback('Failed to get result', null); },
+            two: function(callback) { callback('Also Failed', null); }
+        };
+
+        var count = 0;
+        octopus.run(calls, function(err, results) {
+            count += 1;
+        });
+
+        clock.tick(10);
+        expect(count).to.equal(1);
+        done();
+    });
+
     it('should work with empty array', function(done) {
         var calls = [];
 
@@ -239,6 +255,22 @@ describe('Test octopus.step', function() {
         octopus.step(calls);
         expect(oneCalled).to.be.true;
         expect(twoCalled).to.be.true;
+        done();
+    });
+
+    it('should have only one callback for multiple errors', function(done) {
+        var calls = [
+            function(callback) { callback('Failed to get result', null); },
+            function(callback) { callback('Also Failed', null); }
+        ];
+
+        var count = 0;
+        octopus.step(calls, function(err, results) {
+            count += 1;
+        });
+
+        clock.tick(10);
+        expect(count).to.equal(1);
         done();
     });
 });
