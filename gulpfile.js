@@ -18,7 +18,7 @@ gulp.task('mocha', function() {
         .pipe(mocha({reporter: 'nyan'}))
         .pipe(cover.gather())
         .pipe(cover.format())
-        .pipe(cover.enforce({statements: 99}))
+        .pipe(cover.enforce({statements: 98, lines: 98}))
         .pipe(gulp.dest('reports'));
 });
 

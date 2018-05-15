@@ -1,7 +1,12 @@
 /* global describe, it, beforeEach, afterEach */
-var expect = require('chai').expect;
-var sinon = require('sinon');
-var octopus = require('./octopus.js');
+if (typeof require !== 'undefined') {
+    var expect = require('chai').expect;
+    var sinon = require('sinon');
+    var octopus = require('./octopus.js');
+}
+else {
+    var expect = chai.expect;
+}
 
 var clock;
 beforeEach(function () {

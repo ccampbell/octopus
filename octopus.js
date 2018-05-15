@@ -40,18 +40,18 @@
         function _call(key) {
             calls[key].call(calls[key], (function(key) {
                 return function() {
-                    if (arguments.length === 2 && arguments[0] && waitingOn > 0) {
+                    if (arguments.length > 1 && arguments[0] && waitingOn > 0) {
                         waitingOn = 0;
                         callback.call(octopus, arguments[0], isArray ? [] : {});
                         return;
                     }
 
-                    responses[key] = arguments.length === 2 ? arguments[1] : arguments[0];
+                    responses[key] = arguments.length > 1 ? arguments[1] : arguments[0];
                     waitingOn -= 1;
 
                     if (waitingOn === 0) {
                         var args = [_format(responses)];
-                        if (arguments.length === 2) {
+                        if (arguments.length > 1) {
                             args.unshift(null);
                         }
                         callback.apply(octopus, args);
@@ -119,4 +119,4 @@
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = octopus;
     }
-} (this));
+} (this || window));
