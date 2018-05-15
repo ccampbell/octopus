@@ -7,6 +7,34 @@
 (ノﾉﾉ从し'　
 ```
 
+## Deprecation
+
+**Note**: this package is deprecated. If you need to do asynchronous tasks you should use promises and/or async/await syntax which should work in all modern browsers as well as in the latest versions of node.js.
+
+You could achieve the same thing as octopus natively:
+
+### octopus.run
+
+```javascript
+const results = await Promise.all([one(), two()]);
+
+// or
+
+const [result1, result2] = await Promise.all([one(), two()]);
+```
+
+### octopus.step
+
+```javascript
+const calls = [one, two, three];
+let value;
+for (const call of calls) {
+    value = await call(value);
+}
+```
+
+---
+
 Octopus is a couple of simple asynchronous helper functions.  It is designed
 for use in the browser and is < 500 bytes gzipped.  It works in node.js as well.
 
