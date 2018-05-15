@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Octopus Tests</title>
+    <link rel="stylesheet" href="https://rawgit.com/mochajs/mocha/2.2.1/mocha.css" />
+</head>
+<body>
+    <div id="mocha"></div>
+    <script src="octopus.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/2.2.0/chai.min.js"></script>
+    <script src="https://rawgit.com/domenic/sinon-chai/2.7.0/lib/sinon-chai.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/1.7.3/sinon-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.2.1/mocha.min.js"></script>
+    <script>mocha.setup('bdd')</script>
+    <script src="test.js"></script>
+    <script>
+        mocha.globals(['octopus']);
+
+        if (window.mochaPhantomJS) {
+            window.mochaPhantomJS.run();
+        }
+        else if (!window.PHANTOMJS) {
+            mocha.run();
+        }
+    </script>
+</body>
